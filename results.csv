@@ -1,0 +1,7 @@
+instance,seed,n_targets,targets,recharge_stations,obstacles_count,max_battery,recharge_time,ucs_success,ucs_cost,ucs_nodes,ucs_time,ucs_explored_states,ucs_max_fringe,ucs_reason,astar_success,astar_cost,astar_nodes,astar_time,astar_explored_states,astar_max_fringe,astar_reason
+0,42,3,5-3;5-5;5-0,1-0;7-5,15,10,5,True,10.0,90,0.0006534160000000178,90,90,,True,10.0,11,0.0001680420000000904,11,21,
+1,43,3,2-2;3-6;8-9,6-3;5-1,15,10,5,False,,358,0.003058166999999945,358,120,empty,False,,358,0.0053059579999999995,358,86,empty
+2,44,3,0-4;2-8;4-8,7-6;7-0,18,10,5,False,,66,0.0003978329999999586,66,41,empty,False,,66,0.0008559169999999838,66,21,empty
+3,45,3,5-1;3-0;4-5,1-2;4-0,18,10,5,True,20.0,375,0.0025998339999999676,375,138,,True,20.0,143,0.001876875,143,89,
+4,46,3,2-5;2-8;5-0,7-8;0-5,19,10,5,True,35.0,485,0.003316125000000003,485,104,,True,35.0,251,0.0032874999999999988,251,73,
+5,47,3,4-7;3-8;9-5,1-0;1-4,10,10,5,False,,215,0.0017216670000000933,215,107,empty,False,,215,0.0030715000000000048,215,83,empty
