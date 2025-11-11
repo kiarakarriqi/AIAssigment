@@ -40,3 +40,7 @@ Results:
 	UCS guarantees optimality but is computationally expensive due to exploring many states before finding the solution. A*, using the MST-based heuristic, reduces both the number of expanded nodes and runtime while maintaining optimality. The domain design, including battery constraints and recharge points, forces strategic planning and prevents trivial greedy navigation. The use of random obstacles and target placement ensures variation and prevents overfitting to fixed patterns. The codebase was structured modularly, and controlled random seeds provided reproducible experiments.
 6. Conclusion
  This assignment successfully demonstrates the design of a novel search problem and the implementation of two search algorithms to solve it. The evaluation showed that while UCS is complete and optimal, it is inefficient in both time and space. A* achieves the same solution with significantly fewer node expansions and lower runtime, showcasing the effectiveness of informed search in constrained environments. The experiment highlights the importance of heuristic design in improving planning efficiency.
+
+ References:
+	1.	Russell, S., & Norvig, P. (2020). Artificial Intelligence: A Modern Approach (4th Edition). Pearson.
+	2.	Cormen, T., Leiserson, C., Rivest, R., & Stein, C. (2009). Introduction to Algorithms (3rd Edition). MIT Press.
