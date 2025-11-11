@@ -1,56 +1,42 @@
+Battery-Constrained Multi-Goal Grid
+
 1. Introduction
-  The objective of this assignment was to design a search agent capable of solving a custom puzzle domain using both uninformed and informed search strategies. Instead of standard examples like the 8-puzzle or classical mazes, we designed a battery-constrained multi-goal grid with recharge stations and obstacles.
-  The challenge involves an agent starting at a fixed position, visiting all target cells, managing limited battery capacity, and optionally using recharge stations to restore energy. This domain introduces realistic planning constraints and requires strategic decision-making.
+	The objective of this assignment was to design a custom search problem and implement two search strategies to solve it: one uninformed and one informed. Instead of using standard domains such as the 8-puzzle or classical mazes, I developed a battery-constrained multi-goal grid environment. In this domain, an agent must visit multiple target locations on a grid while managing limited battery energy and optionally recharging at specific stations. This introduces realistic planning constraints and requires strategic optimization rather than simple pathfinding.
 2. Problem Formulation
-	•	Grid: 2D grid of size rows × cols (default 10×10).
-	•	Start: The agent begins at position (0,0).
-	•	Targets: Multiple target cells (n_targets) must be visited.
-	•	Recharge Stations: Recharge locations restore battery to maximum.
-	•	Obstacles: Randomly placed obstacles prevent movement.
-	•	Battery Constraint: Agent has limited moves (max_battery) before needing recharge.
-	•	Actions: Move to a neighbor or recharge (if on a station).
-  State Representation:
-  State(pos, mask, battery) where mask is a bitmask indicating which targets have been visited.
-  Goal: Visit all targets while managing battery efficiently.
-  This domain is original and non-trivial, introducing constraints beyond classical grid problems.
+	The environment is represented as a 2D grid. The agent begins at a fixed starting position and must visit all designated target cells. However, the agent has limited battery capacity and can only take a certain number of moves before needing to recharge. Recharge stations located on the grid restore the battery to full capacity. Additionally, obstacles placed on the grid prevent traversal through certain cells.
+	Environment Components:
+Component           Description
+Grid                2D grid (e.g., 10×10)
+Start Position      (0, 0)
+Targets             Set of cells that must all be visited
+Recharge Stations   Restore battery to full capacity
+Obstacles           Cells that cannot be traversed
+Battery             Maximum step capacity before recharging is required
+Actions             Move Up/Down/Left/Right, or Recharge (if on station)
+
+State Representation:
+State(position, visited_targets_mask, battery_remaining)
+The goal is to reach a state where all targets have been visited without running out of battery.
+This domain is non-trivial because it requires planning under resource constraints, unlike classical pathfinding problems.
+
 3. Search Algorithms
    3.1 Uniform-Cost Search (UCS)
-	•	Type: Uninformed search.
-	•	Implementation:
-	•	Expands nodes in increasing order of cumulative cost.
-	•	Uses dominance pruning: skips states if a better cost with higher battery was already found.
-	•	Properties: Complete and optimal but can be slow due to exhaustive search.
-   3.2 A Search*
-	•	Type: Informed search.
-	•	Heuristic:
-	•	h(state) = distance_to_nearest_target + MST(remaining_targets)
-	•	MST (minimum spanning tree) uses Manhattan distances.
-	•	Admissible and consistent.
-	•	Implementation: Similar to UCS, but priority = g + h.
-	•	Properties: Reduces node expansion and runtime compared to UCS while maintaining optimality.
+UCS is used as the uninformed search strategy. It expands states in order of increasing path cost. A dominance pruning rule is applied so that states are skipped if the same position and visited-target set were reached previously with a better cost and higher remaining battery. UCS is complete and optimal but can be computationally expensive due to exploring a large state space.
+  3.2 A* Search
+A* is used as the informed search strategy. The heuristic function is defined as:
+
+h(state) = \text{distance to nearest unvisited target} + \text{MST cost over remaining targets}
+
+The MST (Minimum Spanning Tree) uses Manhattan distances, making the heuristic admissible and consistent. A* expands states based on the priority g + h, guiding the search toward promising regions of the grid. It maintains optimality but greatly reduces the number of expanded nodes compared to UCS.
 4. Experimental Evaluation
-  Setup:
-	•	6 instances generated with varying target and recharge positions.
-	•	Metrics recorded: nodes expanded, runtime (seconds), solution cost, max fringe size.
-	•	All experiments executed on Python 3.8+, using matplotlib and pandas.
-  4.1 Nodes Expanded
-	•	UCS expands more nodes than A* due to uninformed search.
-	•	A* effectively reduces search space with heuristic guidance.
-  4.2 Runtime
-	•	UCS runtime is higher for all instances.
-	•	A* runtime is consistently lower, demonstrating the efficiency of informed search.
-  4.3 Solution Cost
-	•	Both UCS and A* find the same minimal solution cost for all solvable instances.
-	•	Confirms correctness and optimality of the algorithms.
+  Experiments were performed on six randomly generated grid instances with varying target and recharge placements. The following performance metrics were recorded: number of nodes expanded, runtime, solution cost, and maximum fringe size. All tests were performed using Python with matplotlib and pandas for data analysis.
+
+Results:
+	•	Nodes Expanded: UCS consistently expanded more nodes than A*, demonstrating A*’s advantage in guided search.
+	•	Runtime: UCS required more time to complete each problem. A* showed significantly faster execution due to heuristic direction.
+	•	Solution Cost: Both UCS and A* always found the same minimal-cost solution, verifying correctness and optimality.
+	
 5. Analysis & Discussion
-	•	Trade-offs:
-	•	UCS guarantees optimality but at higher computational cost.
-	•	A* reduces nodes expanded and runtime while maintaining optimality using the MST-based heuristic.
-	•	Domain Design:
-	•	Recharge stations and battery constraints force strategic planning.
-	•	Random obstacles make each instance unique, avoiding trivial solutions.
-	•	Code Quality:
-	•	Modular functions for instance generation, search algorithms, evaluation, and plotting.
-	•	Fully reproducible: random seed ensures repeatable experiments.
+	UCS guarantees optimality but is computationally expensive due to exploring many states before finding the solution. A*, using the MST-based heuristic, reduces both the number of expanded nodes and runtime while maintaining optimality. The domain design, including battery constraints and recharge points, forces strategic planning and prevents trivial greedy navigation. The use of random obstacles and target placement ensures variation and prevents overfitting to fixed patterns. The codebase was structured modularly, and controlled random seeds provided reproducible experiments.
 6. Conclusion
-  This assignment demonstrates the creation of an original multi-goal grid puzzle domain and the implementation of two search algorithms. Comparative evaluation shows A* is more efficient while UCS guarantees optimality. The results illustrate trade-offs between completeness, runtime, and nodes expanded.
+ This assignment successfully demonstrates the design of a novel search problem and the implementation of two search algorithms to solve it. The evaluation showed that while UCS is complete and optimal, it is inefficient in both time and space. A* achieves the same solution with significantly fewer node expansions and lower runtime, showcasing the effectiveness of informed search in constrained environments. The experiment highlights the importance of heuristic design in improving planning efficiency.
